@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trung tâm Ngoại ngữ Ha Teacher</title>
+    <style>
+        :root {
+            --primary-pink: #ff8fa3;
+            --header-bg: #ffb3c1;
+            --tab-active-bg: #ffffff;
+            --tab-inactive-bg: #e8f4f8;
+            --card-yellow: #fffde7;
+            --border-yellow: #fff59d;
+            --btn-blue: #29b6f6;
+            --btn-blue-hover: #0288d1;
+            --btn-orange: #ff7043;
+            --btn-orange-hover: #f4511e;
+            --btn-green: #66bb6a;
+            --btn-red: #ef5350;
+            --text-dark: #2c3e50;
+            --text-green: #2e7d32;
+            --text-purple: #6a1b9a;
+            --border-dashed: #80cbc4;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Times New Roman', Times, serif, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 650px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid #e0e0e0;
+        }
+
+        /* HEADER */
+        .app-header {
+            background-color: var(--header-bg);
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            color: #c2185b;
+        }
+
+        .app-header h1 {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .app-header p {
+            font-size: 16px;
+            font-weight: bold;
+            color: #d81b60;
+        }
+
+        .header-controls {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            display: flex;
+            gap: 6px;
+        }
+
+        .icon-btn {
+            background: #ffffff;
+            border: 1px solid #b2ebf2;
+            border-radius: 6px;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #00838f;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: #e0f7fa;
+        }
+
+        /* TABS NAV */
+        .tab-nav {
+            display: flex;
+            background-color: #e1f5fe;
+            padding: 8px 8px 0 8px;
+            gap: 4px;
+            border-bottom: 2px solid #b3e5fc;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 4px;
+            border: none;
+            border-radius: 12px 12px 0 0;
+            background-color: transparent;
+            color: #0277bd;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background-color: #ffffff;
+            color: #0288d1;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+            border-top: 2px solid #29b6f6;
+        }
+
+        /* MAIN CONTENT AREA */
+        .tab-content {
+            padding: 20px;
+            min-height: 460px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: #ffffff;
+        }
+
+        .tab-pane {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .tab-pane.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* TAB 1: MỤC TIÊU */
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .goal-card {
+            background: #f1f8e9;
+            border: 2px solid #c8e6c9;
+            border-radius: 16px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .goal-icon {
+            font-size: 32px;
+        }
+
+        .goal-text h3 {
+            font-size: 16px;
+            color: #2e7d32;
+            margin-bottom: 4px;
+        }
+
+        .goal-text p {
+            font-size: 13px;
+            color: #555;
+        }
+
+        /* COMMON DISPLAY CARD FOR VOCAB & SENTENCES */
+        .display-card {
+            background-color: var(--card-yellow);
+            border: 2px solid var(--border-yellow);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
+            margin-bottom: 15px;
+        }
+
+        .media-box {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 12px auto;
+            border-radius: 16px;
+            border: 3px solid #81d4fa;
+            overflow: hidden;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .media-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .word-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--text-green);
+            margin-bottom: 2px;
+        }
+
+        .word-type {
+            font-style: italic;
+            color: #e65100;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .word-ipa {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0288d1;
+            margin-bottom: 12px;
+        }
+
+        .action-btn {
+            background: var(--btn-orange);
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 0 #e65100;
+            transition: all 0.1s;
+        }
+
+        .action-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #e65100;
+        }
+
+        .meaning-text {
+            color: var(--text-purple);
+            font-size: 16px;
+            font-weight: bold;
+            margin: 12px 0;
+        }
+
+        .example-box {
+            border: 2px dashed var(--border-dashed);
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 10px;
+        }
+
+        .example-en {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--text-green);
+            margin-bottom: 4px;
+        }
+
+        .example-vi {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        /* CARD NAVIGATION BUTTONS */
+        .nav-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .nav-btn {
+            background: var(--btn-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #0288d1;
+            transition: all 0.1s;
+        }
+
+        .nav-btn:disabled {
+            background: #cfd8dc;
+            box-shadow: none;
+            cursor: not-allowed;
+            color: #90a4ae;
+        }
+
+        .nav-btn:not(:disabled):active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #0288d1;
+        }
+
+        .counter-label {
+            font-weight: bold;
+            color: #546e7a;
+            font-size: 15px;
+        }
+
+        /* TAB 4: FLASHCARD */
+        .flashcard-wrapper {
+            perspective: 1000px;
+            width: 100%;
+            height: 320px;
+            margin-bottom: 15px;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            border-radius: 20px;
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            background-color: var(--card-yellow);
+            border: 2px solid var(--border-yellow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+        }
+
+        .eval-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .btn-remember {
+            background: var(--btn-green);
+            box-shadow: 0 4px 0 #388e3c;
+        }
+
+        .btn-forget {
+            background: var(--btn-red);
+            box-shadow: 0 4px 0 #d32f2f;
+        }
+
+        /* RESULT VIEW */
+        .result-box {
+            text-align: center;
+            padding: 20px;
+            background: #f3e5f5;
+            border-radius: 20px;
+            border: 2px solid #e1bee7;
+        }
+
+        .result-box h2 {
+            color: #7b1fa2;
+            margin-bottom: 15px;
+        }
+
+        .result-lists {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .result-col {
+            flex: 1;
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        .result-col h4 {
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* PROGRESS BAR FOOTER */
+        .app-footer {
+            background: #fafafa;
+            padding: 12px 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: bold;
+            color: #78909c;
+            margin-bottom: 6px;
+        }
+
+        .progress-bar-bg {
+            height: 10px;
+            background-color: #cfd8dc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #00bfa5;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .toast-msg {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            display: none;
+            z-index: 1000;
+        }
+
+        @media (max-width: 480px) {
+            .app-header h1 { font-size: 20px; }
+            .app-header p { font-size: 13px; }
+            .tab-btn { font-size: 12px; padding: 8px 2px; }
+            .media-box { width: 130px; height: 130px; }
+            .word-title { font-size: 26px; }
+            .example-en { font-size: 16px; }
+            .nav-btn { padding: 8px 12px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- HEADER -->
+    <header class="app-header">
+        <h1>Ha Teacher</h1>
+        <p>Unit 1: Hello (Lớp 3)</p>
+        <div class="header-controls">
+            <button class="icon-btn" onclick="resetAllProgress()" title="Làm lại bài học">🔄</button>
+            <button class="icon-btn" onclick="toggleFullScreen()" title="Toàn màn hình">⛶</button>
+        </div>
+    </header>
+
+    <!-- TABS NAVIGATION -->
+    <nav class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('tab-goals')">🎯 MỤC TIÊU</button>
+        <button class="tab-btn" onclick="switchTab('tab-vocab')">📚 TỪ VỰNG</button>
+        <button class="tab-btn" onclick="switchTab('tab-sentences')">💬 MẪU CÂU</button>
+        <button class="tab-btn" onclick="switchTab('tab-flashcard')">🃏 FLASHCARD</button>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="tab-content">
+        <!-- TAB 1: MỤC TIÊU BÀI HỌC -->
+        <div id="tab-goals" class="tab-pane active">
+            <div class="goals-grid">
+                <div class="goal-card">
+                    <div class="goal-icon">🎯</div>
+                    <div class="goal-text">
+                        <h3>Nhận biết từ vựng</h3>
+                        <p>Học sinh nhận biết các từ vựng chào hỏi cơ bản trong bài.</p>
+                    </div>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-icon">🔊</div>
+                    <div class="goal-text">
+                        <h3>Phát âm chuẩn</h3>
+                        <p>Nghe và bắt chước phát âm chuẩn General American.</p>
+                    </div>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-icon">👂</div>
+                    <div class="goal-text">
+                        <h3>Luyện nghe</h3>
+                        <p>Rèn luyện khả năng nghe từ vựng và câu giao tiếp.</p>
+                    </div>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-icon">🧠</div>
+                    <div class="goal-text">
+                        <h3>Ghi nhớ nghĩa</h3>
+                        <p>Hiểu và ghi nhớ nghĩa tiếng Việt tương ứng.</p>
+                    </div>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-icon">🔤</div>
+                    <div class="goal-text">
+                        <h3>Phiên âm IPA</h3>
+                        <p>Làm quen với các ký hiệu phiên âm quốc tế IPA.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: HỌC TỪ VỰNG -->
+        <div id="tab-vocab" class="tab-pane">
+            <div class="display-card">
+                <div class="media-box">
+                    <img id="vocab-img" src="" alt="Vocabulary illustration" onerror="handleImgError(this)">
+                </div>
+                <div id="vocab-word" class="word-title">bye</div>
+                <div id="vocab-type" class="word-type">interjection</div>
+                <div id="vocab-ipa" class="word-ipa">/baɪ/</div>
+                
+                <button class="action-btn" onclick="speakCurrentVocabWord()">🔊 Nghe từ</button>
+                
+                <div id="vocab-meaning" class="meaning-text">: tạm biệt</div>
+
+                <div class="example-box">
+                    <div id="vocab-ex-en" class="example-en">Bye, Mai! See you tomorrow.</div>
+                    <div id="vocab-ex-vi" class="example-vi">(Tạm biệt Mai! Hẹn gặp bạn ngày mai.)</div>
+                    <button class="action-btn" style="background:#29b6f6; box-shadow:0 4px 0 #0288d1;" onclick="speakCurrentVocabSentence()">🔊 Nghe câu</button>
+                </div>
+            </div>
+
+            <div class="nav-controls">
+                <button id="vocab-prev-btn" class="nav-btn" onclick="changeVocab(-1)">← Từ trước</button>
+                <span id="vocab-counter" class="counter-label">1/7</span>
+                <button id="vocab-next-btn" class="nav-btn" onclick="changeVocab(1)">Từ tiếp theo →</button>
+            </div>
+        </div>
+
+        <!-- TAB 3: MẪU CÂU -->
+        <div id="tab-sentences" class="tab-pane">
+            <div class="display-card">
+                <div class="media-box">
+                    <img id="sent-img" src="" alt="Sentence illustration" onerror="handleImgError(this)">
+                </div>
+                <div id="sent-en" class="word-title" style="font-size:24px;">Hello. I’m Hai Linh.</div>
+                <div id="sent-ipa" class="word-ipa">/həˈloʊ. aɪm haɪ lɪŋ/</div>
+                
+                <button class="action-btn" onclick="speakCurrentSentence()">🔊 Nghe câu</button>
+                
+                <div id="sent-vi" class="meaning-text" style="color:#555; margin-top:15px;">Nghĩa: Xin chào. Mình là Bill.</div>
+            </div>
+
+            <div class="nav-controls">
+                <button id="sent-prev-btn" class="nav-btn" onclick="changeSentence(-1)">← Câu trước</button>
+                <span id="sent-counter" class="counter-label">1/14</span>
+                <button id="sent-next-btn" class="nav-btn" onclick="changeSentence(1)">Câu tiếp theo →</button>
+            </div>
+        </div>
+
+        <!-- TAB 4: FLASHCARD -->
+        <div id="tab-flashcard" class="tab-pane">
+            <!-- Normal Quiz View -->
+            <div id="flashcard-quiz-view">
+                <div class="flashcard-wrapper">
+                    <div id="flashcard-element" class="flashcard">
+                        <!-- Front Face -->
+                        <div class="card-face card-front">
+                            <div class="media-box" style="width:140px; height:140px;">
+                                <img id="fc-front-img" src="" alt="Flashcard hint" onerror="handleImgError(this)">
+                            </div>
+                            <div style="font-size: 40px; color: #ffa726; margin: 10px 0;">❓</div>
+                            <div style="display:flex; gap:10px;">
+                                <button class="action-btn" onclick="speakFlashcardWord(event)">🔊 Nghe</button>
+                                <button class="action-btn" style="background:#ab47bc; box-shadow:0 4px 0 #7b1fa2;" onclick="flipFlashcard()">👀 Xem đáp án</button>
+                            </div>
+                        </div>
+                        <!-- Back Face -->
+                        <div class="card-face card-back">
+                            <div class="media-box" style="width:100px; height:100px; margin-bottom:6px;">
+                                <img id="fc-back-img" src="" alt="Flashcard answer" onerror="handleImgError(this)">
+                            </div>
+                            <div id="fc-back-word" class="word-title" style="font-size:26px;">bye</div>
+                            <div id="fc-back-ipa" class="word-ipa" style="margin-bottom:4px;">/baɪ/</div>
+                            <div id="fc-back-meaning" class="meaning-text" style="margin:4px 0;">: tạm biệt</div>
+                            <button class="action-btn" style="padding:4px 12px; font-size:13px;" onclick="speakFlashcardWord(event)">🔊 Nghe</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="eval-buttons">
+                    <button id="fc-btn-remember" class="action-btn btn-remember" onclick="markFlashcard(true)" disabled>✅ Đã nhớ</button>
+                    <button id="fc-btn-forget" class="action-btn btn-forget" onclick="markFlashcard(false)" disabled>❌ Chưa nhớ</button>
+                </div>
+
+                <div class="nav-controls" style="margin-top:15px;">
+                    <button id="fc-prev-btn" class="nav-btn" onclick="changeFlashcard(-1)">← Trước</button>
+                    <span id="fc-counter" class="counter-label">1/7</span>
+                    <button id="fc-next-btn" class="nav-btn" onclick="changeFlashcard(1)">Tiếp theo →</button>
+                </div>
+            </div>
+
+            <!-- Result View -->
+            <div id="flashcard-result-view" class="result-box" style="display:none;">
+                <h2>🎉 Hoàn thành!</h2>
+                <p id="result-summary" style="font-size:16px; font-weight:bold;">Bạn đã nhớ: 5/7 từ</p>
+                
+                <div class="result-lists">
+                    <div class="result-col" style="border:1px solid #a5d6a7;">
+                        <h4 style="color:#2e7d32;">✅ Đã nhớ</h4>
+                        <ul id="list-remembered" style="list-style-type:none; padding-left:5px;"></ul>
+                    </div>
+                    <div class="result-col" style="border:1px solid #ef9a9a;">
+                        <h4 style="color:#c62828;">🔄 Cần ôn lại</h4>
+                        <ul id="list-forgotten" style="list-style-type:none; padding-left:5px;"></ul>
+                    </div>
+                </div>
+
+                <div style="display:flex; justify-content:center; gap:10px; margin-top:15px;">
+                    <button id="btn-review-needed" class="action-btn" style="background:#ff9800; box-shadow:0 4px 0 #e65100;" onclick="startReviewMode()">🔄 Ôn lại từ chưa nhớ</button>
+                    <button class="action-btn" style="background:#29b6f6; box-shadow:0 4px 0 #0288d1;" onclick="restartFullFlashcards()">🔁 Ôn lại tất cả</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER / PROGRESS -->
+    <footer class="app-footer">
+        <div class="progress-info">
+            <span id="progress-label">Từ vựng (1/7)</span>
+            <span id="progress-percent">14%</span>
+        </div>
+        <div class="progress-bar-bg">
+            <div id="progress-fill" class="progress-bar-fill"></div>
+        </div>
+    </footer>
+</div>
+
+<div id="toast" class="toast-msg"></div>
+
+<script>
+    /* ==========================================
+       DATA DEFINITION
+       ========================================== */
+    const VOCAB_DATA = [
+        {
+            word: "bye",
+            ipa: "/baɪ/",
+            type: "interjection",
+            meaning: ": tạm biệt",
+            exampleEn: "Bye, Mai! See you tomorrow.",
+            exampleVi: "(Tạm biệt Mai! Hẹn gặp bạn ngày mai.)",
+            img: "https://yourhomework.net/yhw/bfc/images/vocabulary/english/sgk-tieng-anh-1-family-and-friends-national-edition-starter/goodbye.jpg"
+        },
+        {
+            word: "goodbye",
+            ipa: "/ˌɡʊdˈbaɪ/",
+            type: "interjection",
+            meaning: ": tạm biệt",
+            exampleEn: "Goodbye, teacher.",
+            exampleVi: "(Tạm biệt cô giáo.)",
+            img: "https://yourhomework.net/yhw/bfc/images/vocabulary/english/sgk-tieng-anh-1-family-and-friends-national-edition-starter/goodbye.jpg"
+        },
+        {
+            word: "hi",
+            ipa: "/haɪ/",
+            type: "interjection",
+            meaning: ": xin chào",
+            exampleEn: "Hi, Nam!",
+            exampleVi: "(Chào Nam!)",
+            img: "https://img.magnific.com/free-vector/hand-drawn-flat-design-people-waving-illustration_23-2149195759.jpg?semt=ais_hybrid&w=740&q=80"
+        },
+        {
+            word: "hello",
+            ipa: "/həˈləʊ/",
+            type: "interjection",
+            meaning: ": xin chào",
+            exampleEn: "Hello, everyone!",
+            exampleVi: "(Xin chào mọi người!)",
+            img: "https://img.magnific.com/free-vector/hand-drawn-flat-design-people-waving-illustration_23-2149195759.jpg?semt=ais_hybrid&w=740&q=80"
+        },
+        {
+            word: "how",
+            ipa: "/haʊ/",
+            type: "adverb",
+            meaning: ": như thế nào",
+            exampleEn: "How are you?",
+            exampleVi: "(Bạn khỏe không?)",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHGeSh-svwRaCW7gG8vWBKpRa982oqMrqJ3oytnSH44lkqact50t5tywzo&s=10"
+        },
+        {
+            word: "I",
+            ipa: "/aɪ/",
+            type: "pronoun",
+            meaning: ": Tôi",
+            exampleEn: "I am Linh.",
+            exampleVi: "(Tôi là Linh.)",
+            img: "https://png.pngtree.com/png-vector/20231120/ourmid/pngtree-teenager-pointing-at-himself-himself-png-image_10579161.png"
+        },
+        {
+            word: "you",
+            ipa: "/ju/",
+            type: "pronoun",
+            meaning: ": bạn",
+            exampleEn: "How are you?",
+            exampleVi: "(Bạn khỏe không?)",
+            img: "https://png.pngtree.com/png-clipart/20221015/original/pngtree-boy-helping-and-supporting-friend-anak-membantu-dan-menenangkan-teman-png-image_8689137.png"
+        }
+    ];
+
+    const SENTENCE_DATA = [
+        {
+            en: "Hello. I’m Bill.",
+            ipa: "/həˈloʊ. aɪm Bill/",
+            vi: "Nghĩa: Xin chào. Mình là Bill.",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKAHn5jY_6I5MR-N9EmhmH_i5ifF6SIeF47ZYKCqOMVAC2J24_gXv5r7qa&s=10"
+        },
+        {
+            en: "Hi. I’m Nam. Nice to meet you.",
+            ipa: "/haɪ. aɪm nɑːm. naɪs tuː miːt juː/",
+            vi: "Nghĩa: Chào. Mình là Nam. Rất vui được gặp bạn.",
+            img: "https://png.pngtree.com/png-clipart/20230914/original/pngtree-supportive-clipart-two-close-friends-having-fun-cartoon-vector-png-image_11091764.png"
+        },
+        {
+            en: "How are you?",
+            ipa: "/haʊ ɑːr juː/",
+            vi: "Nghĩa: Bạn khỏe không?",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSF4LYeJaMqGteW5YAFwmjBPbnPMDZa386F_lI-pkr5Y3hdf3ldEwqspbY&s=10"
+        },
+        {
+            en: "I’m fine, thank you.",
+            ipa: "/aɪm faɪn, θæŋk juː/",
+            vi: "Nghĩa: Mình khỏe, cảm ơn bạn.",
+            img: "https://f4.bcbits.com/img/a0842025247_16.jpg"
+        },
+        {
+            en: "How are you today?",
+            ipa: "/haʊ ɑːr juː təˈdeɪ/",
+            vi: "Nghĩa: Hôm nay bạn khỏe không?",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSF4LYeJaMqGteW5YAFwmjBPbnPMDZa386F_lI-pkr5Y3hdf3ldEwqspbY&s=10"
+        },
+        {
+            en: "I’m very well, thank you.",
+            ipa: "/aɪm ˈveri wel, θæŋk juː/",
+            vi: "Nghĩa: Mình rất khỏe, cảm ơn bạn.",
+            img: "https://f4.bcbits.com/img/a0842025247_16.jpg"
+        },
+        {
+            en: "Hi, Mai!",
+            ipa: "/haɪ, maɪ/",
+            vi: "Nghĩa: Chào Mai!",
+            img: "https://png.pngtree.com/recommend-works/png-clipart/20250308/ourlarge/pngtree-the-little-girl-says-hello-to-you-png-image_15739778.png"
+        },
+        {
+            en: "Hello, everyone!",
+            ipa: "/həˈloʊ, ˈevriwʌn/",
+            vi: "Nghĩa: Xin chào mọi người!",
+            img: "https://static.vecteezy.com/system/resources/thumbnails/069/281/763/small/diverse-smiling-people-say-hello-on-different-foreign-languages-and-waving-hands-multinational-happy-young-male-and-female-characters-greetings-friendly-gestures-vector.jpg"
+        },
+        {
+            en: "Good morning, teacher!",
+            ipa: "/ɡʊd ˈmɔːrnɪŋ, ˈtiːtʃər/",
+            vi: "Nghĩa: Chào buổi sáng, cô giáo!",
+            img: "https://thumbs.dreamstime.com/b/little-kids-say-good-morning-to-teacher-253953985.jpg"
+        },
+        {
+            en: "Good afternoon, teacher!",
+            ipa: "/ɡʊd ˌæftərˈnuːn, ˈtiːtʃər/",
+            vi: "Nghĩa: Chào buổi chiều, cô giáo!",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZWl-f3OvhluEQAsqEvMZaNfQMUQIlCuWd66l7yJtTPuQ4_AixYlbIUkqV&s=10"
+        },
+        {
+            en: "Good evening, Dad!",
+            ipa: "/ɡʊd ˈiːvnɪŋ, dæd/",
+            vi: "Nghĩa: Chào buổi tối, bố!",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSSyb-MKMUd2QSExDL0UQSoKLTMREye4R2wRJw_R_lgiQCenFnq0SvmJtm&s=10"
+        },
+        {
+            en: "Good night, Mom!",
+            ipa: "/ɡʊd naɪt, mɑːm/",
+            vi: "Nghĩa: Chúc mẹ ngủ ngon!",
+            img: "https://m.media-amazon.com/images/I/81BhIbUbRRL._AC_UF1000,1000_QL80_.jpg"
+        },
+        {
+            en: "Goodbye, teacher! See you tomorrow.",
+            ipa: "/ˌɡʊdˈbaɪ, ˈtiːtʃər! siː juː təˈmɑːroʊ/",
+            vi: "Nghĩa: Tạm biệt cô giáo! Hẹn gặp cô ngày mai.",
+            img: "https://img.magnific.com/free-vector/watercolor-end-school-illustration_23-2149415369.jpg?semt=ais_test_b&w=740&q=80"
+        },
+        {
+            en: "Bye, Mai! See you later.",
+            ipa: "/baɪ, maɪ! siː juː ˈleɪtər/",
+            vi: "Nghĩa: Tạm biệt Mai! Hẹn gặp lại bạn.",
+            img: "https://i.ytimg.com/vi/wdi9F5_-f9k/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCeV99VglVyg-8wdMV8G6ZD9bcjtQ"
+        }
+    ];
+
+    const SVG_FALLBACK = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23fff9c4'/><text x='50' y='55' font-size='35' text-anchor='middle' fill='%23fbc02d'>📖</text></svg>";
+
+    /* ==========================================
+       STATE MANAGEMENT
+       ========================================== */
+    let currentTab = "tab-goals";
+    let vocabIndex = 0;
+    let sentenceIndex = 0;
+    
+    // Flashcard State
+    let activeFcList = [...VOCAB_DATA];
+    let fcIndex = 0;
+    let fcFlipped = false;
+    let fcStatusMap = {}; // { word: true/false }
+
+    /* ==========================================
+       INITIALIZATION & LOCALSTORAGE
+       ========================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+        loadFromLocalStorage();
+        updateVocabUI();
+        updateSentenceUI();
+        updateFlashcardUI();
+        updateProgressBar();
+    });
+
+    function saveToLocalStorage() {
+        const state = {
+            vocabIndex,
+            sentenceIndex,
+            fcIndex,
+            fcStatusMap
+        };
+        localStorage.setItem('ha_teacher_unit1_state', JSON.stringify(state));
+    }
+
+    function loadFromLocalStorage() {
+        const saved = localStorage.getItem('ha_teacher_unit1_state');
+        if (saved) {
+            try {
+                const state = JSON.parse(saved);
+                vocabIndex = state.vocabIndex || 0;
+                sentenceIndex = state.sentenceIndex || 0;
+                fcIndex = state.fcIndex || 0;
+                fcStatusMap = state.fcStatusMap || {};
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    }
+
+    function resetAllProgress() {
+        if (confirm("Bạn có chắc muốn làm lại bài học không? Tất cả tiến độ sẽ được đặt lại.")) {
+            localStorage.removeItem('ha_teacher_unit1_state');
+            vocabIndex = 0;
+            sentenceIndex = 0;
+            fcIndex = 0;
+            fcStatusMap = {};
+            activeFcList = [...VOCAB_DATA];
+            document.getElementById('flashcard-quiz-view').style.display = 'block';
+            document.getElementById('flashcard-result-view').style.display = 'none';
+            updateVocabUI();
+            updateSentenceUI();
+            updateFlashcardUI();
+            updateProgressBar();
+            showToast("Đã đặt lại tiến độ bài học!");
+        }
+    }
+
+    /* ==========================================
+       TAB MANAGEMENT
+       ========================================== */
+    function switchTab(tabId) {
+        currentTab = tabId;
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+        const targetBtn = Array.from(document.querySelectorAll('.tab-btn')).find(
+            btn => btn.getAttribute('onclick').includes(tabId)
+        );
+        if (targetBtn) targetBtn.classList.add('active');
+
+        const targetPane = document.getElementById(tabId);
+        if (targetPane) targetPane.classList.add('active');
+
+        updateProgressBar();
+    }
+
+    /* ==========================================
+       VOCABULARY TAB LOGIC
+       ========================================== */
+    function updateVocabUI() {
+        const item = VOCAB_DATA[vocabIndex];
+        document.getElementById('vocab-img').src = item.img;
+        document.getElementById('vocab-word').textContent = item.word;
+        document.getElementById('vocab-type').textContent = item.type;
+        document.getElementById('vocab-ipa').textContent = item.ipa;
+        document.getElementById('vocab-meaning').textContent = item.meaning;
+        document.getElementById('vocab-ex-en').textContent = item.exampleEn;
+        document.getElementById('vocab-ex-vi').textContent = item.exampleVi;
+
+        document.getElementById('vocab-counter').textContent = `${vocabIndex + 1}/${VOCAB_DATA.length}`;
+        document.getElementById('vocab-prev-btn').disabled = (vocabIndex === 0);
+        document.getElementById('vocab-next-btn').disabled = (vocabIndex === VOCAB_DATA.length - 1);
+
+        saveToLocalStorage();
+        if (currentTab === 'tab-vocab') updateProgressBar();
+    }
+
+    function changeVocab(step) {
+        vocabIndex += step;
+        if (vocabIndex < 0) vocabIndex = 0;
+        if (vocabIndex >= VOCAB_DATA.length) vocabIndex = VOCAB_DATA.length - 1;
+        updateVocabUI();
+    }
+
+    /* ==========================================
+       SENTENCES TAB LOGIC
+       ========================================== */
+    function updateSentenceUI() {
+        const item = SENTENCE_DATA[sentenceIndex];
+        document.getElementById('sent-img').src = item.img;
+        document.getElementById('sent-en').textContent = item.en;
+        document.getElementById('sent-ipa').textContent = item.ipa;
+        document.getElementById('sent-vi').textContent = item.vi;
+
+        document.getElementById('sent-counter').textContent = `${sentenceIndex + 1}/${SENTENCE_DATA.length}`;
+        document.getElementById('sent-prev-btn').disabled = (sentenceIndex === 0);
+        document.getElementById('sent-next-btn').disabled = (sentenceIndex === SENTENCE_DATA.length - 1);
+
+        saveToLocalStorage();
+        if (currentTab === 'tab-sentences') updateProgressBar();
+    }
+
+    function changeSentence(step) {
+        sentenceIndex += step;
+        if (sentenceIndex < 0) sentenceIndex = 0;
+        if (sentenceIndex >= SENTENCE_DATA.length) sentenceIndex = SENTENCE_DATA.length - 1;
+        updateSentenceUI();
+    }
+
+    /* ==========================================
+       FLASHCARD TAB LOGIC
+       ========================================== */
+    function updateFlashcardUI() {
+        if (activeFcList.length === 0) return;
+
+        if (fcIndex >= activeFcList.length) {
+            showFlashcardResult();
+            return;
+        }
+
+        const item = activeFcList[fcIndex];
+        
+        // Reset Flip State
+        fcFlipped = false;
+        document.getElementById('flashcard-element').classList.remove('flipped');
+        document.getElementById('fc-btn-remember').disabled = true;
+        document.getElementById('fc-btn-forget').disabled = true;
+
+        // Front Face Data
+        document.getElementById('fc-front-img').src = item.img;
+
+        // Back Face Data
+        document.getElementById('fc-back-img').src = item.img;
+        document.getElementById('fc-back-word').textContent = item.word;
+        document.getElementById('fc-back-ipa').textContent = item.ipa;
+        document.getElementById('fc-back-meaning').textContent = item.meaning;
+
+        document.getElementById('fc-counter').textContent = `${fcIndex + 1}/${activeFcList.length}`;
+        document.getElementById('fc-prev-btn').disabled = (fcIndex === 0);
+        document.getElementById('fc-next-btn').disabled = (fcIndex === activeFcList.length - 1);
+
+        saveToLocalStorage();
+        if (currentTab === 'tab-flashcard') updateProgressBar();
+    }
+
+    function flipFlashcard() {
+        fcFlipped = !fcFlipped;
+        const card = document.getElementById('flashcard-element');
+        if (fcFlipped) {
+            card.classList.add('flipped');
+            document.getElementById('fc-btn-remember').disabled = false;
+            document.getElementById('fc-btn-forget').disabled = false;
+        } else {
+            card.classList.remove('flipped');
+        }
+    }
+
+    function changeFlashcard(step) {
+        fcIndex += step;
+        if (fcIndex < 0) fcIndex = 0;
+        if (fcIndex >= activeFcList.length) fcIndex = activeFcList.length - 1;
+        updateFlashcardUI();
+    }
+
+    function markFlashcard(isRemembered) {
+        if (!fcFlipped) return;
+        const currentItem = activeFcList[fcIndex];
+        fcStatusMap[currentItem.word] = isRemembered;
+
+        if (fcIndex < activeFcList.length - 1) {
+            fcIndex++;
+            updateFlashcardUI();
+        } else {
+            showFlashcardResult();
+        }
+    }
+
+    function showFlashcardResult() {
+        document.getElementById('flashcard-quiz-view').style.display = 'none';
+        document.getElementById('flashcard-result-view').style.display = 'block';
+
+        const remembered = [];
+        const forgotten = [];
+
+        VOCAB_DATA.forEach(v => {
+            if (fcStatusMap[v.word] === true) remembered.push(v.word);
+            else if (fcStatusMap[v.word] === false) forgotten.push(v.word);
+        });
+
+        document.getElementById('result-summary').textContent = `Bạn đã nhớ: ${remembered.length}/${VOCAB_DATA.length} từ`;
+
+        const rememberedUl = document.getElementById('list-remembered');
+        rememberedUl.innerHTML = remembered.length > 0 ? 
+            remembered.map(w => `<li style="color:#2e7d32; margin:2px 0;">✔ ${w}</li>`).join('') : '<li><i>Chưa có</i></li>';
+
+        const forgottenUl = document.getElementById('list-forgotten');
+        forgottenUl.innerHTML = forgotten.length > 0 ? 
+            forgotten.map(w => `<li style="color:#c62828; margin:2px 0;">✖ ${w}</li>`).join('') : '<li><i>Không có</i></li>';
+
+        const reviewBtn = document.getElementById('btn-review-needed');
+        if (forgotten.length === 0) {
+            reviewBtn.style.display = 'none';
+        } else {
+            reviewBtn.style.display = 'inline-flex';
+        }
+    }
+
+    function startReviewMode() {
+        const forgottenItems = VOCAB_DATA.filter(v => fcStatusMap[v.word] === false);
+        if (forgottenItems.length > 0) {
+            activeFcList = forgottenItems;
+            fcIndex = 0;
+            document.getElementById('flashcard-quiz-view').style.display = 'block';
+            document.getElementById('flashcard-result-view').style.display = 'none';
+            updateFlashcardUI();
+        }
+    }
+
+    function restartFullFlashcards() {
+        activeFcList = [...VOCAB_DATA];
+        fcIndex = 0;
+        fcStatusMap = {};
+        document.getElementById('flashcard-quiz-view').style.display = 'block';
+        document.getElementById('flashcard-result-view').style.display = 'none';
+        updateFlashcardUI();
+    }
+
+    /* ==========================================
+       PROGRESS BAR UPDATE
+       ========================================== */
+    function updateProgressBar() {
+        let label = "";
+        let current = 0;
+        let total = 1;
+
+        if (currentTab === 'tab-goals') {
+            label = "Mục tiêu bài học";
+            current = 1;
+            total = 1;
+        } else if (currentTab === 'tab-vocab') {
+            label = "Từ vựng";
+            current = vocabIndex + 1;
+            total = VOCAB_DATA.length;
+        } else if (currentTab === 'tab-sentences') {
+            label = "Mẫu câu";
+            current = sentenceIndex + 1;
+            total = SENTENCE_DATA.length;
+        } else if (currentTab === 'tab-flashcard') {
+            label = "Flashcard";
+            current = fcIndex + 1;
+            total = activeFcList.length;
+        }
+
+        const percentage = Math.round((current / total) * 100);
+        document.getElementById('progress-label').textContent = `${label} (${current}/${total})`;
+        document.getElementById('progress-percent').textContent = `${percentage}%`;
+        document.getElementById('progress-fill').style.width = `${percentage}%`;
+    }
+
+    /* ==========================================
+       AUDIO - WEB SPEECH API (EN-US FEMALE PRIORITY)
+       ========================================== */
+    let preferredVoice = null;
+
+    function initVoices() {
+        if (!('speechSynthesis' in window)) return;
+
+        const voices = window.speechSynthesis.getVoices();
+        if (voices.length === 0) return;
+
+        // Priority 1: en-US female voice
+        preferredVoice = voices.find(v => v.lang.includes('en-US') && v.name.toLowerCase().includes('female')) ||
+                         // Priority 2: Google / Natural en-US
+                         voices.find(v => v.lang.includes('en-US') && (v.name.includes('Google') || v.name.includes('Natural'))) ||
+                         // Priority 3: Any en-US
+                         voices.find(v => v.lang.includes('en-US')) ||
+                         // Priority 4: Any English voice
+                         voices.find(v => v.lang.startsWith('en'));
+    }
+
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.onvoiceschanged = initVoices;
+        initVoices();
+    }
+
+    function speakText(text) {
+        if (!('speechSynthesis' in window)) {
+            showToast("⚠️ Trình duyệt chưa hỗ trợ phát âm tự động. Vui lòng thử Chrome hoặc Edge.");
+            return;
+        }
+
+        window.speechSynthesis.cancel(); // Stop ongoing speech
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.85; // Natural slow rate for kids
+        utterance.pitch = 1.0;
+
+        if (preferredVoice) {
+            utterance.voice = preferredVoice;
+            utterance.lang = preferredVoice.lang;
+        } else {
+            utterance.lang = 'en-US';
+        }
+
+        window.speechSynthesis.speak(utterance);
+    }
+
+    function speakCurrentVocabWord() {
+        speakText(VOCAB_DATA[vocabIndex].word);
+    }
+
+    function speakCurrentVocabSentence() {
+        speakText(VOCAB_DATA[vocabIndex].exampleEn);
+    }
+
+    function speakCurrentSentence() {
+        speakText(SENTENCE_DATA[sentenceIndex].en);
+    }
+
+    function speakFlashcardWord(event) {
+        if (event) event.stopPropagation();
+        speakText(activeFcList[fcIndex].word);
+    }
+
+    /* ==========================================
+       HELPERS & UTILS
+       ========================================== */
+    function handleImgError(img) {
+        img.onerror = null;
+        img.src = SVG_FALLBACK;
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    }
+
+    function toggleFullScreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(err => {
+                showToast("Không thể bật chế độ toàn màn hình.");
+            });
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    }
+</script>
+</body>
+</html>
